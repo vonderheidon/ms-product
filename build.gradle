@@ -1,0 +1,67 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+    id 'checkstyle'
+}
+
+group = 'br.com.catolicapb'
+version = '0.0.1-SNAPSHOT'
+description = 'Micro serviço para gerenciamento de produtos'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// ---------------- Checkstyle ----------------
+checkstyle {
+    toolVersion = "10.12.0"
+    configFile = file("${rootProject.projectDir}/config/checkstyle/checkstyle.xml")
+    configProperties = [
+            "checkstyle.cache.file" : "${buildDir}/checkstyle/cachefile"
+    ]
+
+}
+
+tasks.withType(Checkstyle).configureEach {
+
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+        html.outputLocation.set(file("$buildDir/reports/checkstyle/${name}.html"))
+    }
+}
+
+
+// ---------------- Relatórios no "check" ----------------
+check.dependsOn tasks.withType(Checkstyle)
+
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <!-- Encoding do código -->
+    <property name="charset" value="UTF-8"/>
+
+    <!-- Tamanho máximo de linha -->
+    <module name="LineLength">
+        <property name="max" value="120"/>
+    </module>
+
+
+    <!-- Verificações relacionadas à árvore do código -->
+    <module name="TreeWalker">
+
+        <!-- Declaração de pacote obrigatória -->
+        <module name="PackageDeclaration"/>
+
+        <!-- Nome da classe deve bater com o nome do arquivo -->
+        <module name="OuterTypeFilename"/>
+
+        <!-- Convenções de nomenclatura -->
+        <module name="TypeName"/>
+        <module name="MethodName"/>
+        <module name="ParameterName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        
+        <!-- Detecta imports não utilizados -->
+    	<module name="UnusedImports"/>
+
+
+
+        <!-- Espaços e indentação -->
+        <module name="WhitespaceAround"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+
+        <!-- Comprimento máximo de métodos -->
+        <module name="MethodLength">
+            <property name="max" value="100"/>
+        </module>
+
+        <!-- Máximo de parâmetros em métodos -->
+        <module name="ParameterNumber">
+            <property name="max" value="7"/>
+        </module>
+
+    </module>
+</module>
