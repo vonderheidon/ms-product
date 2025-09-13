@@ -49,6 +49,14 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public ProductDTO findById(Long id) {
+        log.info("Buscando produto com o ID: {}", id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(PRODUCT_MESSAGE_NOT_FOUND_404));
+
+        return productMapper.entityToDto(product);
+    }
+
     public Page<ProductDTO> findAll(Pageable pageable) {
         var products = productRepository.findAll(pageable);
 

@@ -5,6 +5,7 @@ import br.com.catolicapb.dto.ResponseDTO;
 import br.com.catolicapb.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.context.WebServerApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ import static br.com.catolicapb.constants.ProductConstants.*;
 public class ProductController {
 
     private final ProductService productService;
+    private final WebServerApplicationContext context;
+    private int count = 1;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> save(@Valid @RequestBody ProductDTO productDTO) {
@@ -28,6 +31,14 @@ public class ProductController {
                         .statusCode(CODE_STATUS_201)
                         .message(PRODUCT_MESSAGE_CREATED_201)
                         .build());
+    }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        ProductDTO productDTO = productService.findById(id);
+        var port = context.getWebServer().getPort();
+        System.out.println("Porta ms-product: " + port + " - Count: " + count++);
+        return ResponseEntity.ok(productDTO);
     }
 
     @GetMapping("/findAll")
