@@ -5,6 +5,7 @@ import br.com.catolicapb.dto.ResponseDTO;
 import br.com.catolicapb.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.boot.web.context.WebServerApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,7 @@ public class ProductController {
     }
 
     @GetMapping("/findAll")
-    public Page<ProductDTO> findAll(Pageable pageable) {
+    public Page<ProductDTO> findAll(@ParameterObject Pageable pageable) {
         return productService.findAll(pageable);
     }
 
